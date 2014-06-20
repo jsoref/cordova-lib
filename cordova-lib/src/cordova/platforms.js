@@ -81,6 +81,12 @@ module.exports = {
         url    : 'https://git-wip-us.apache.org/repos/asf?p=cordova-windows.git',
         version: 'master',
         subdirectory: 'windows'
+    },
+    'ripple':{
+        hostos : [],
+        parser: './metadata/ripple_parser',
+        url    : 'https://github.com/vladimir-kotikov/cordova-ripple',
+        version: '3.5.0'
     }
 };
 
