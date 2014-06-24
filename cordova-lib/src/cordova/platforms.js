@@ -85,7 +85,7 @@ module.exports = {
     'ripple':{
         hostos : [],
         parser: './metadata/ripple_parser',
-        url    : 'https://github.com/MSOpenTech/cordova-ripple',
+        url    : 'http://github.com/MSOpenTech/cordova-ripple/archive/master.tar.gz',
         version: 'master'
     }
 };
