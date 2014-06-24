@@ -83,7 +83,7 @@ module.exports = {
         subdirectory: 'windows'
     },
     'ripple':{
-        hostos : [],
+        hostos : ['*'],
         parser: './metadata/ripple_parser',
         url    : 'http://github.com/MSOpenTech/cordova-ripple/archive/master.tar.gz',
         version: 'master'
