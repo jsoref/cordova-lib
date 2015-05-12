@@ -156,7 +156,7 @@ module.exports.uninstallPlugin = function(id, plugins_dir, options) {
     platforms.forEach(function(platform) {
         var platformJson = PlatformJson.load(plugins_dir, platform);
         var depsInfo = dependencies.generateDependencyInfo(platformJson, plugins_dir, pluginInfoProvider);
-        var tlps = depsInfo.top_level_plugins;
+        var tlps = depsInfo.top_level_plugins.filter(function (p) { return !(p in depsInfo.being_removed); });
         var deps;
 
         // Top-level deps must always be explicitely asked to remove by user
@@ -240,7 +240,8 @@ function runUninstallPlatform(actions, platform, project_dir, plugin_dir, plugin
     // Check how many dangling dependencies this plugin has.
     var deps = depsInfo.graph.getChain(plugin_id);
     var danglers = dependencies.danglers(plugin_id, depsInfo, platformJson, pluginInfoProvider);
-
+    // remove our own plugin from the list, because otherwise ...
+    depsInfo.being_removed[plugin_id] = true;
     var promise;
     if (deps && deps.length && danglers && danglers.length) {
 

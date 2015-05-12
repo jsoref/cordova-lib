@@ -62,6 +62,7 @@ module.exports = package = {
 
         return {
             graph:graph,
+            being_removed:{},
             top_level_plugins:tlps
         };
     },
@@ -75,7 +76,8 @@ module.exports = package = {
             depsInfo = package.generateDependencyInfo(platformJson, plugins_dir, pluginInfoProvider);
 
         var graph = depsInfo.graph;
-        var tlps = depsInfo.top_level_plugins;
+        var being_removed = depsInfo.being_removed;
+        var tlps = depsInfo.top_level_plugins.filter(function (p) { return !(p in depsInfo.being_removed); });
         var dependents = tlps.filter(function(tlp) {
             return tlp != plugin_id && graph.getChain(tlp).indexOf(plugin_id) >= 0;
         });
@@ -93,12 +95,13 @@ module.exports = package = {
             depsInfo = package.generateDependencyInfo(platformJson, plugins_dir, pluginInfoProvider);
 
         var graph = depsInfo.graph;
+        var being_removed = depsInfo.being_removed;
         var dependencies = graph.getChain(plugin_id);
 
-        var tlps = depsInfo.top_level_plugins;
+        var tlps = depsInfo.top_level_plugins.filter(function (p) { return !(p in depsInfo.being_removed); });
         var diff_arr = [];
         tlps.forEach(function(tlp) {
-            if (tlp != plugin_id) {
+            if (tlp != plugin_id && !(tlp in being_removed)) {
                 diff_arr.push(graph.getChain(tlp));
             }
         });
